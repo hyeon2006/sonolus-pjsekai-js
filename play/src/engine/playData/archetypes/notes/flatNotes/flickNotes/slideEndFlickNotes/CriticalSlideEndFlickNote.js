@@ -1,16 +1,14 @@
-import { lane } from '../../../../../../../../shared/src/engine/data/lane.js';
-import { perspectiveLayout } from '../../../../../../../../shared/src/engine/data/utils.js';
-import { windows } from '../../../../../../../../shared/src/engine/data/windows.js';
-import { buckets } from '../../../../buckets.js';
-import { effect } from '../../../../effect.js';
-import { particle } from '../../../../particle.js';
-import { skin } from '../../../../skin.js';
-import { archetypes } from '../../../index.js';
-import { FlickNote } from './FlickNote.js';
-import { SharedLaneEffectUtils } from './SharedLaneEffectUtils.js';
-import { options } from '../../../../../configuration/options.js'
-
-export class CriticalSlideEndFlickNote extends FlickNote {
+import { perspectiveLayout } from '../../../../../../../../../shared/src/engine/data/utils.js';
+import { windows } from '../../../../../../../../../shared/src/engine/data/windows.js';
+import { buckets } from '../../../../../buckets.js';
+import { effect } from '../../../../../effect.js';
+import { lane } from '../../../../../lane.js';
+import { particle } from '../../../../../particle.js';
+import { skin } from '../../../../../skin.js';
+import { archetypes } from '../../../../index.js';
+import { SlideEndFlickNote } from './SlideEndFlickNote.js';
+import { SharedLaneEffectUtils } from '../SharedLaneEffectUtils.js';
+export class CriticalSlideEndFlickNote extends SlideEndFlickNote {
     sprites = {
         left: skin.sprites.criticalNoteLeft,
         middle: skin.sprites.criticalNoteMiddle,
@@ -57,16 +55,21 @@ export class CriticalSlideEndFlickNote extends FlickNote {
         return archetypes.CriticalSlotGlowEffect;
     }
     playLaneEffects() {
+        if (particle.effects.criticalFlickLane.exists) {
+            this.check = true;
+        }
+        else {
+            particle.effects.lane.spawn(perspectiveLayout({
+                l: this.import.lane - this.import.size,
+                r: this.import.lane + this.import.size,
+                b: lane.b,
+                t: lane.t,
+            }), 0.3, false);
+        }
     }
-    preprocess() {
-        super.preprocess();
-        const l = this.import.lane - this.import.size;
-        const r = this.import.lane + this.import.size;
-        const t = this.hitTime
-        const laneB = lane.b
-        const laneT = lane.t
-        archetypes.LaneEffectSpawner.spawn({
-            l: l, r: r, t: t, laneB: laneB, laneT: laneT, j: this.import.judgment,
-        });
+    touch() {
+        super.touch();
+        if (!this.check) return
+        SharedLaneEffectUtils.playAndHandleLaneEffect(this, this.laneE);
     }
 }

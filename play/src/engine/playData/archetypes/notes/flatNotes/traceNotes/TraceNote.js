@@ -2,19 +2,22 @@ import { note } from '../../../../note.js';
 import { flatEffectLayout, particle } from '../../../../particle.js';
 import { scaledScreen } from '../../../../scaledScreen.js';
 import { getZ, layer } from '../../../../skin.js';
+import { disallowEmpty } from '../../../InputManager.js';
 import { FlatNote } from '../FlatNote.js';
 export class TraceNote extends FlatNote {
+    leniency = 1;
     layer = layer.note.trace;
+    earlyInputTime = this.entityMemory(Number);
+    earlyHitTime = this.entityMemory(Number);
     diamondLayout = this.entityMemory(Rect);
     diamondZ = this.entityMemory(Number);
-    get useFallbackSprites() {
-        return (!this.sprites.left.exists ||
-            !this.sprites.middle.exists ||
-            !this.sprites.right.exists ||
-            !this.sprites.diamond.exists);
-    }
-    globalInitialize() {
-        super.globalInitialize();
+    judExport = this.defineExport({
+        jud: { name: 'jud', type: Number },
+    });
+    initialize() {
+        super.initialize();
+        this.earlyInputTime = this.targetTime + input.offset;
+        this.earlyHitTime = -9999;
         if (!this.useFallbackSprites) {
             const w = note.h / scaledScreen.wToH;
             new Rect({
@@ -26,19 +29,82 @@ export class TraceNote extends FlatNote {
             this.diamondZ = getZ(layer.note.tick, this.targetTime, this.import.lane);
         }
     }
+    touch() {
+        if (time.now < this.inputTime.min)
+            return;
+        if (time.now < this.earlyInputTime) {
+            this.earlyTouch();
+        }
+        else {
+            this.lateTouch();
+        }
+    }
+    updateParallel() {
+        this.triggerEarlyTouch();
+        super.updateParallel();
+    }
+    earlyTouch() {
+        for (const touch of touches) {
+            if (!this.fullHitbox.contains(touch.position))
+                continue;
+            disallowEmpty(touch);
+            this.earlyHitTime = touch.time;
+            return;
+        }
+    }
+    lateTouch() {
+        for (const touch of touches) {
+            if (!this.fullHitbox.contains(touch.position))
+                continue;
+            disallowEmpty(touch);
+            this.complete(Math.max(touch.time, this.targetTime));
+            return;
+        }
+    }
+    triggerEarlyTouch() {
+        if (this.despawn)
+            return;
+        if (time.now < this.earlyInputTime)
+            return;
+        if (this.earlyHitTime === -9999)
+            return;
+        this.complete(this.earlyHitTime);
+        this.despawn = true;
+    }
     render() {
         super.render();
         if (!this.useFallbackSprites) {
             this.sprites.diamond.draw(this.diamondLayout.mul(this.y), this.diamondZ, 1);
         }
     }
+    complete(hitTime) {
+        this.result.judgment = input.judge(hitTime, this.targetTime, this.windows);
+        this.result.accuracy = hitTime - this.targetTime;
+        this.result.bucket.index = this.bucket.index;
+        this.result.bucket.value = this.result.accuracy * 1000;
+        this.playHitEffects(time.now);
+        this.despawn = true;
+        if (this.windows.perfect.min > this.result.accuracy)
+            this.judExport('jud', 1);
+        else if (this.windows.perfect.max < this.result.accuracy)
+            this.judExport('jud', 2);
+    }
     playCircularNoteEffect() {
         particle.effects.spawn(this.circularEffectId, flatEffectLayout({ lane: this.import.lane }), 0.6, false);
     }
-    playSlotLinears() {
+    playSlotEffects() {
         // removed
     }
-    spawnSlotEffects() {
+    playSlotLinears() {
+        //removed
+    }
+    playLaneEffects() {
         // removed
+    }
+    get useFallbackSprites() {
+        return (!this.sprites.left.exists ||
+            !this.sprites.middle.exists ||
+            !this.sprites.right.exists ||
+            !this.sprites.diamond.exists);
     }
 }

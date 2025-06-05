@@ -4,4 +4,3 @@ node_modules
 dist
 .dist
 /.vs
-/shared/src/level/bgm.mp3

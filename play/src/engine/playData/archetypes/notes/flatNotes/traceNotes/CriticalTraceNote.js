@@ -32,7 +32,4 @@ export class CriticalTraceNote extends TraceNote {
     get slotGlowEffect() {
         return archetypes.CriticalSlotGlowEffect;
     }
-    playLaneEffects() {
-        //
-    }
 }

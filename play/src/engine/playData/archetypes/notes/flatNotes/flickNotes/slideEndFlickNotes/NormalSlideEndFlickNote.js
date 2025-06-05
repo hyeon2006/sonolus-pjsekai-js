@@ -1,11 +1,11 @@
-import { windows } from '../../../../../../../../shared/src/engine/data/windows.js';
-import { buckets } from '../../../../buckets.js';
-import { effect } from '../../../../effect.js';
-import { particle } from '../../../../particle.js';
-import { skin } from '../../../../skin.js';
-import { archetypes } from '../../../index.js';
-import { FlickNote } from './FlickNote.js';
-export class NormalSlideEndFlickNote extends FlickNote {
+import { windows } from '../../../../../../../../../shared/src/engine/data/windows.js';
+import { buckets } from '../../../../../buckets.js';
+import { effect } from '../../../../../effect.js';
+import { particle } from '../../../../../particle.js';
+import { skin } from '../../../../../skin.js';
+import { archetypes } from '../../../../index.js';
+import { SlideEndFlickNote } from './SlideEndFlickNote.js';
+export class NormalSlideEndFlickNote extends SlideEndFlickNote {
     sprites = {
         left: skin.sprites.flickNoteLeft,
         middle: skin.sprites.flickNoteMiddle,
