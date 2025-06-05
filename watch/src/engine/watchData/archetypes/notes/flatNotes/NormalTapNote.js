@@ -20,6 +20,7 @@ export class NormalTapNote extends FlatNote {
     effects = {
         circular: particle.effects.normalNoteCircular,
         linear: particle.effects.normalNoteLinear,
+        slotEffects: particle.effects.slotEffectCyan,
     };
     windows = windows.tapNote.normal;
     bucket = buckets.normalTapNote;

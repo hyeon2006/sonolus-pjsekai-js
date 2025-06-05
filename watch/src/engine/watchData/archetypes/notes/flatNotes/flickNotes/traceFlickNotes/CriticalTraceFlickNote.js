@@ -24,6 +24,7 @@ export class CriticalTraceFlickNote extends TraceFlickNote {
     effects = {
         circular: particle.effects.criticalNoteCircular,
         linear: particle.effects.criticalNoteLinear,
+        slotEffects: particle.effects.slotEffectCyan,
     };
     arrowSprites = {
         up: [

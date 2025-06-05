@@ -1,13 +1,13 @@
-import { perspectiveLayout } from '../../../../../../../../shared/src/engine/data/utils.js';
-import { windows } from '../../../../../../../../shared/src/engine/data/windows.js';
-import { buckets } from '../../../../buckets.js';
-import { effect } from '../../../../effect.js';
-import { lane } from '../../../../lane.js';
-import { particle } from '../../../../particle.js';
-import { skin } from '../../../../skin.js';
-import { archetypes } from '../../../index.js';
-import { SlideEndNote } from './SlideEndNote.js';
-export class CriticalSlideEndNote extends SlideEndNote {
+import { lane } from '../../../../../../../shared/src/engine/data/lane.js';
+import { perspectiveLayout } from '../../../../../../../shared/src/engine/data/utils.js';
+import { windows } from '../../../../../../../shared/src/engine/data/windows.js';
+import { buckets } from '../../../buckets.js';
+import { effect } from '../../../effect.js';
+import { particle } from '../../../particle.js';
+import { skin } from '../../../skin.js';
+import { archetypes } from '../../index.js';
+import { FlatNote } from './FlatNote.js';
+export class CriticalSlideEndNote extends FlatNote {
     sprites = {
         left: skin.sprites.criticalNoteLeft,
         middle: skin.sprites.criticalNoteMiddle,
@@ -22,6 +22,7 @@ export class CriticalSlideEndNote extends SlideEndNote {
         circularFallback: particle.effects.criticalNoteCircular,
         linear: particle.effects.criticalSlideLinear,
         linearFallback: particle.effects.criticalNoteLinear,
+        slotEffects: particle.effects.slotEffectSlideTapYellow,
     };
     windows = windows.slideEndNote.critical;
     bucket = buckets.criticalSlideEndNote;

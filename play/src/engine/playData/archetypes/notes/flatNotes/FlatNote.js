@@ -90,6 +90,9 @@ export class FlatNote extends Note {
             ? this.effects.linearFallback.id
             : this.effects.linear.id;
     }
+    get slotEffectId() {
+        return this.effects.slotEffects.id
+    }
     scheduleSFX() {
         if ('fallback' in this.clips && this.useFallbackClip) {
             this.clips.fallback.schedule(this.targetTime, sfxDistance);
@@ -116,6 +119,8 @@ export class FlatNote extends Note {
             this.playNoteEffects();
         if (options.slotEffectEnabled)
             this.playSlotEffects(hitTime);
+        if (options.slotLinearEnabled)
+            this.playSlotLinears();
         if (options.laneEffectEnabled)
             this.playLaneEffects();
     }
@@ -156,6 +161,23 @@ export class FlatNote extends Note {
             w: 1.75,
             h: 1.05,
         }), 0.6, false);
+    }
+    playSlotLinears() {
+        if (this.effects.slotEffects.exists && options.slotLinearEnabled) {
+            const start = Math.floor(this.import.lane - this.import.size)
+            const end = Math.ceil(this.import.lane + this.import.size)
+            for (let i = start; i < end; i++) {
+                particle.effects.spawn(
+                    this.slotEffectId,
+                    linearEffectLayout({
+                        lane: i + 0.5,
+                        shear: 0,
+                    }),
+                    0.5,
+                    false,
+                )
+            }
+        }
     }
     playSlotEffects(startTime) {
         const start = Math.floor(this.import.lane - this.import.size);

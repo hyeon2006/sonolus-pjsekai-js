@@ -1,13 +1,14 @@
+import { lane } from '../../../../../../../../../shared/src/engine/data/lane.js';
 import { perspectiveLayout } from '../../../../../../../../../shared/src/engine/data/utils.js';
 import { windows } from '../../../../../../../../../shared/src/engine/data/windows.js';
 import { buckets } from '../../../../../buckets.js';
 import { effect } from '../../../../../effect.js';
-import { lane } from '../../../../../lane.js';
 import { particle } from '../../../../../particle.js';
 import { skin } from '../../../../../skin.js';
 import { archetypes } from '../../../../index.js';
 import { TraceFlickNote } from './TraceFlickNote.js';
-import { SharedLaneEffectUtils } from '../SharedLaneEffectUtils.js';
+import { options } from '../../../../../../configuration/options.js'
+
 export class CriticalTraceFlickNote extends TraceFlickNote {
     sprites = {
         left: skin.sprites.criticalTraceNoteLeft,
@@ -23,6 +24,7 @@ export class CriticalTraceFlickNote extends TraceFlickNote {
     effects = {
         circular: particle.effects.criticalNoteCircular,
         linear: particle.effects.criticalNoteLinear,
+        slotEffects: particle.effects.slotEffectCyan,
     };
     arrowSprites = {
         up: [
@@ -49,18 +51,17 @@ export class CriticalTraceFlickNote extends TraceFlickNote {
     get slotEffect() {
         return archetypes.CriticalSlotEffect;
     }
-    get slotGlowEffect() {
-        return archetypes.CriticalSlotGlowEffect;
-    }
-
     playLaneEffects() {
-        if (particle.effects.criticalFlickLane.exists) {
-            this.check = true;
-        }
     }
-    touch() {
-        super.touch();
-        if (!this.check) return
-        SharedLaneEffectUtils.playAndHandleLaneEffect(this, this.laneE);
+    preprocess() {
+        super.preprocess();
+        const l = this.import.lane - this.import.size;
+        const r = this.import.lane + this.import.size;
+        const t = this.hitTime
+        const laneB = lane.b
+        const laneT = lane.t
+        archetypes.LaneEffectSpawner.spawn({
+            l: l, r: r, t: t, laneB: laneB, laneT: laneT, j: this.import.judgment,
+        });
     }
 }

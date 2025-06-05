@@ -166,6 +166,12 @@ export const optionsDefinition = {
         type: 'toggle',
         def: 1,
     },
+    slotLinearEnabled: {
+        name: 'Enable Fancy Slot Effects',
+        scope: 'Sekai',
+        type: 'toggle',
+        def: 1,
+    },
     slotEffectSize: {
         name: Text.SlotEffectSize,
         scope: 'Sekai',

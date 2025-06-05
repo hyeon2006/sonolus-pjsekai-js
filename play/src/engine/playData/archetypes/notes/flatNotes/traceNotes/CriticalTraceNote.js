@@ -22,6 +22,7 @@ export class CriticalTraceNote extends TraceNote {
         circularFallback: particle.effects.criticalSlideTickNote,
         linear: particle.effects.criticalTraceNoteLinear,
         linearFallback: particle.effects.criticalNoteLinear,
+        slotEffects: particle.effects.slotEffectYellow,
     };
     windows = windows.traceNote.critical;
     bucket = buckets.criticalTraceNote;
@@ -30,5 +31,8 @@ export class CriticalTraceNote extends TraceNote {
     }
     get slotGlowEffect() {
         return archetypes.CriticalSlotGlowEffect;
+    }
+    playLaneEffects() {
+        //
     }
 }

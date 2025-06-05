@@ -35,7 +35,7 @@ export class TraceNote extends FlatNote {
     playCircularNoteEffect() {
         particle.effects.spawn(this.circularEffectId, flatEffectLayout({ lane: this.import.lane }), 0.6, false);
     }
-    playLaneEffects() {
+    playSlotLinears() {
         // removed
     }
     spawnSlotEffects() {

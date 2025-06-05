@@ -21,6 +21,7 @@ export class NormalTraceFlickNote extends TraceFlickNote {
     effects = {
         circular: particle.effects.flickNoteCircular,
         linear: particle.effects.flickNoteLinear,
+        slotEffects: particle.effects.slotEffectCyan,
     };
     arrowSprites = {
         up: [

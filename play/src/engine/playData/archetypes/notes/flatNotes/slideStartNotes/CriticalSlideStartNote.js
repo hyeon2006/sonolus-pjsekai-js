@@ -1,8 +1,8 @@
+import { lane } from '../../../../../../../../shared/src/engine/data/lane.js';
 import { perspectiveLayout } from '../../../../../../../../shared/src/engine/data/utils.js';
 import { windows } from '../../../../../../../../shared/src/engine/data/windows.js';
 import { buckets } from '../../../../buckets.js';
 import { effect } from '../../../../effect.js';
-import { lane } from '../../../../lane.js';
 import { particle } from '../../../../particle.js';
 import { skin } from '../../../../skin.js';
 import { archetypes } from '../../../index.js';
@@ -22,6 +22,7 @@ export class CriticalSlideStartNote extends SlideStartNote {
         circularFallback: particle.effects.criticalNoteCircular,
         linear: particle.effects.criticalSlideLinear,
         linearFallback: particle.effects.criticalNoteLinear,
+        slotEffects: particle.effects.slotEffectSlideTapYellow,
     };
     windows = windows.slideStartNote.critical;
     bucket = buckets.criticalSlideStartNote;

@@ -1,11 +1,11 @@
-import { windows } from '../../../../../../../../../shared/src/engine/data/windows.js';
-import { buckets } from '../../../../../buckets.js';
-import { effect } from '../../../../../effect.js';
-import { particle } from '../../../../../particle.js';
-import { skin } from '../../../../../skin.js';
-import { archetypes } from '../../../../index.js';
-import { SingleFlickNote } from './SingleFlickNote.js';
-export class NormalFlickNote extends SingleFlickNote {
+import { windows } from '../../../../../../../../shared/src/engine/data/windows.js';
+import { buckets } from '../../../../buckets.js';
+import { effect } from '../../../../effect.js';
+import { particle } from '../../../../particle.js';
+import { skin } from '../../../../skin.js';
+import { archetypes } from '../../../index.js';
+import { FlickNote } from './FlickNote.js';
+export class NormalFlickNote extends FlickNote {
     sprites = {
         left: skin.sprites.flickNoteLeft,
         middle: skin.sprites.flickNoteMiddle,
@@ -20,6 +20,7 @@ export class NormalFlickNote extends SingleFlickNote {
     effects = {
         circular: particle.effects.flickNoteCircular,
         linear: particle.effects.flickNoteLinear,
+        slotEffects: particle.effects.slotEffectFlickRed,
     };
     arrowSprites = {
         up: [

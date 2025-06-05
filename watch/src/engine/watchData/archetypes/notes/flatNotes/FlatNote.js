@@ -90,6 +90,9 @@ export class FlatNote extends Note {
             ? this.effects.linearFallback.id
             : this.effects.linear.id;
     }
+    get slotEffectId() {
+        return this.effects.slotEffects.id
+    }
     get hitTime() {
         return this.targetTime + (replay.isReplay ? this.import.accuracy : 0);
     }
@@ -161,6 +164,8 @@ export class FlatNote extends Note {
             this.playNoteEffects();
         if (options.laneEffectEnabled)
             this.playLaneEffects();
+        if (options.slotLinearEnabled)
+            this.playSlotLinears();
     }
     playNoteEffects() {
         this.playLinearNoteEffect();
@@ -195,6 +200,24 @@ export class FlatNote extends Note {
                 b: lane.b,
                 t: lane.t,
             }), 0.3, false);
+        }
+    }
+    playSlotLinears() {
+        if (this.effects.slotEffects.exists) {
+            const start = Math.floor(this.import.lane - this.import.size)
+            const end = Math.ceil(this.import.lane + this.import.size)
+
+            for (let i = start; i < end; i++) {
+                particle.effects.spawn(
+                    this.slotEffectId,
+                    linearEffectLayout({
+                        lane: i + 0.5,
+                        shear: 0,
+                    }),
+                    0.5,
+                    false,
+                )
+            }
         }
     }
     spawnSlotEffects(startTime) {

@@ -22,6 +22,7 @@ export class CriticalSlideEndNote extends FlatNote {
         circularFallback: particle.effects.criticalNoteCircular,
         linear: particle.effects.criticalSlideLinear,
         linearFallback: particle.effects.criticalNoteLinear,
+        slotEffects: particle.effects.slotEffectSlideTapYellow,
     };
     windows = windows.slideEndNote.critical;
     bucket = buckets.criticalSlideEndNote;

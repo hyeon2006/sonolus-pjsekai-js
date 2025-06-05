@@ -22,6 +22,7 @@ export class CriticalSlideEndTraceNote extends TraceNote {
         circularFallback: particle.effects.criticalSlideTickNote,
         linear: particle.effects.criticalTraceNoteLinear,
         linearFallback: particle.effects.criticalNoteLinear,
+        slotEffects: particle.effects.slotEffectCyan,
     };
     windows = windows.slideEndTraceNote.critical;
     bucket = buckets.criticalSlideEndTraceNote;

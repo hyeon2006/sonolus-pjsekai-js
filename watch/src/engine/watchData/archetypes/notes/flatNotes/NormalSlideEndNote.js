@@ -18,6 +18,7 @@ export class NormalSlideEndNote extends FlatNote {
     effects = {
         circular: particle.effects.slideNoteCircular,
         linear: particle.effects.slideNoteLinear,
+        slotEffects: particle.effects.slotEffectSlideTapGreen,
     };
     windows = windows.slideEndNote.normal;
     bucket = buckets.normalSlideEndNote;

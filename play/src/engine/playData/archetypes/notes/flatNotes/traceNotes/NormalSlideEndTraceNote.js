@@ -22,6 +22,7 @@ export class NormalSlideEndTraceNote extends TraceNote {
         circularFallback: particle.effects.normalSlideTickNote,
         linear: particle.effects.normalTraceNoteLinear,
         linearFallback: particle.effects.slideNoteLinear,
+        slotEffects: particle.effects.slotEffectCyan,
     };
     windows = windows.slideEndTraceNote.normal;
     bucket = buckets.normalSlideEndTraceNote;

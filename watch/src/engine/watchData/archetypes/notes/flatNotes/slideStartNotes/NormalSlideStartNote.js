@@ -18,6 +18,7 @@ export class NormalSlideStartNote extends SlideStartNote {
     effects = {
         circular: particle.effects.slideNoteCircular,
         linear: particle.effects.slideNoteLinear,
+        slotEffects: particle.effects.slotEffectSlideTapGreen,
     };
     windows = windows.slideStartNote.normal;
     bucket = buckets.normalSlideStartNote;
