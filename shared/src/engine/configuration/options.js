@@ -142,6 +142,16 @@ export const optionsDefinition = {
         type: 'toggle',
         def: 1,
     },
+    laneAlpha: {
+        name: Text.LaneAlpha,
+        scope: 'Sekai',
+        type: 'slider',
+        def: 1,
+        min: 0,
+        max: 1,
+        step: 0.1,
+        unit: Text.PercentageUnit,
+    },
     connectorAlpha: {
         name: Text.ConnectorAlpha,
         scope: 'Sekai',

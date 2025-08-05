@@ -1,7 +1,7 @@
-import { NormalLayout } from '../../../../../shared/src/engine/data/utils.js'
-import { getZ, layer, skin } from '../skin.js'
-import { scaledScreen } from '../scaledScreen.js'
-import { archetypes } from './index.js'
+import { NormalLayout } from '../../../../../../shared/src/engine/data/utils.js'
+import { getZ, layer, skin } from '../../skin.js'
+import { scaledScreen } from '../../scaledScreen.js'
+import { archetypes } from '../index.js'
 
 export class Damage extends SpawnableArchetype({}) {
     preprocessOrder = 5

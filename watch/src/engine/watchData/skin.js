@@ -7,6 +7,7 @@ export const skin = defineSkin({
         stageLeftBorder: SkinSpriteName.StageLeftBorder,
         stageRightBorder: SkinSpriteName.StageRightBorder,
         sekaiStage: 'Sekai Stage',
+        sekaiStageCover: 'Sekai Stage Cover',
         simLine: SkinSpriteName.SimultaneousConnectionNeutral,
         normalNoteLeft: 'Sekai Note Cyan Left',
         normalNoteMiddle: 'Sekai Note Cyan Middle',

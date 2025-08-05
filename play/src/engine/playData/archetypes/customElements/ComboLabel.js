@@ -1,7 +1,6 @@
-import { NormalLayout } from '../../../../../shared/src/engine/data/utils.js'
-import { getZ, layer, skin } from '../skin.js'
-import { options } from '../../configuration/options.js'
-import { archetypes } from './index.js'
+import { NormalLayout } from '../../../../../../shared/src/engine/data/utils.js'
+import { getZ, layer, skin } from '../../skin.js'
+import { options } from '../../../configuration/options.js'
 export class ComboLabel extends SpawnableArchetype({
     time: Number,
     judgment: Number,
