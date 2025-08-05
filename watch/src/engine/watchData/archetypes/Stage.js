@@ -48,7 +48,7 @@ export class Stage extends Archetype {
         const a = 0.8 * ((Math.cos(time.now * Math.PI) + 1) / 2)
         const h = 0.04 * ui.configuration.judgment.scale
         const w = h * 32.55
-        const x = 6.646
+        const x = scaledScreen.r - 2.6452178
         skin.sprites.autoLive.draw(
             NormalLayout({
                 l: x - w,
