@@ -184,7 +184,8 @@ export class SlideConnector extends Archetype {
             if (this.useFallbackSprite) {
                 this.sprites.fallback.draw(layout, this.z, a)
             } else if (
-                (options.connectorAnimation && this.visual === VisualType.Activated) ||
+                options.connectorAnimation &&
+                this.visual === VisualType.Activated &&
                 !this.guide
             ) {
                 const normalA = (Math.cos((time.now - this.start.time) * 2 * Math.PI) + 1) / 2
