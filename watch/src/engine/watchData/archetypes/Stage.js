@@ -82,7 +82,7 @@ export class Stage extends Archetype {
         skin.sprites.sekaiStage.draw(layout, layer.stage, !options.showLane ? 0 : 1)
         skin.sprites.sekaiStageCover.draw(
             layout,
-            layer.stage,
+            layer.stage - 0.01,
             !options.showLane ? 0 : options.laneAlpha,
         )
     }
