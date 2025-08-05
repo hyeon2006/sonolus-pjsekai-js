@@ -1,6 +1,6 @@
-import { NormalLayout } from '../../../../../shared/src/engine/data/utils.js'
-import { getZ, layer, skin } from '../skin.js'
-import { scaledScreen } from '../scaledScreen.js'
+import { NormalLayout } from '../../../../../../shared/src/engine/data/utils.js'
+import { getZ, layer, skin } from '../../skin.js'
+import { scaledScreen } from '../../scaledScreen.js'
 export class Damage extends SpawnableArchetype({
     time: Number,
 }) {

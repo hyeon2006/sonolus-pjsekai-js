@@ -1,6 +1,6 @@
-import { NormalLayout } from '../../../../../shared/src/engine/data/utils.js'
-import { getZ, layer, skin } from '../skin.js'
-import { archetypes } from './index.js'
+import { NormalLayout } from '../../../../../../shared/src/engine/data/utils.js'
+import { getZ, layer, skin } from '../../skin.js'
+import { archetypes } from './../index.js'
 
 export class JudgmentAccuracy extends SpawnableArchetype({
     time: Number,
