@@ -1,7 +1,7 @@
-import { NormalLayout } from '../../../../../shared/src/engine/data/utils.js'
-import { options } from '../../configuration/options.js'
-import { getZ, layer, skin } from '../skin.js'
-import { archetypes } from './index.js'
+import { NormalLayout } from '../../../../../../shared/src/engine/data/utils.js'
+import { options } from '../../../configuration/options.js'
+import { getZ, layer, skin } from '../../skin.js'
+import { archetypes } from '../index.js'
 export class ComboLabel extends SpawnableArchetype({}) {
     preprocessOrder = 5
     check = this.entityMemory(Boolean)

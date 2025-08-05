@@ -1,12 +1,13 @@
-import { NormalLayout } from '../../../../../shared/src/engine/data/utils.js'
-import { options } from '../../configuration/options.js'
-import { getZ, layer, skin } from '../skin.js'
-import { archetypes } from './index.js'
-export class ComboNumberGlow extends SpawnableArchetype({}) {
-    preprocessOrder = 5
+import { NormalLayout } from '../../../../../../shared/src/engine/data/utils.js'
+import { options } from '../../../configuration/options.js'
+import { getZ, layer, skin } from '../../skin.js'
+import { drawDigit } from './drawDigit.js'
+export class ComboNumber extends SpawnableArchetype({}) {
+    preprocessOrder = 4
     check = this.entityMemory(Boolean)
-    layout = this.entityMemory(Quad)
     z = this.entityMemory(Number)
+    z2 = this.entityMemory(Number)
+    head = this.entityMemory(Number)
     customCombo = this.defineSharedMemory({
         value: Tuple(4, Number),
         time: Number,
@@ -20,8 +21,11 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
         accuracy: Number,
         fastLate: Number,
     })
+    searching = this.defineSharedMemory({
+        head: Number,
+    })
     initialize() {
-        this.z = getZ(layer.judgment + 1, 0, 0)
+        this.z = getZ(layer.judgment, 0, 0)
     }
     spawnTime() {
         return -999999
@@ -29,7 +33,36 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
     despawnTime() {
         return 999999
     }
+    updateSequential() {
+        this.searching.get(0).head = this.head
+    }
     updateParallel() {
+        if (time.now <= this.customCombo.get(this.customCombo.get(0).start).time && this.check) {
+            this.head = this.customCombo.get(0).start
+            this.check = false
+        }
+        if (time.skip) {
+            let ptr = this.customCombo.get(0).start
+            const tail = this.customCombo.get(0).tail
+            for (let level = 3; level >= 0; level--) {
+                while (
+                    ptr != tail &&
+                    this.customCombo.get(this.customCombo.get(ptr).value.get(level)).time < time.now
+                ) {
+                    ptr = this.customCombo.get(ptr).value.get(level)
+                }
+            }
+            this.head = ptr
+            this.check = true
+        }
+        while (
+            time.now >= this.customCombo.get(this.customCombo.get(this.head).value.get(0)).time &&
+            this.head != this.customCombo.get(0).tail
+        ) {
+            this.head = this.customCombo.get(this.head).value.get(0)
+            this.check = true
+        }
+        if (!options.customCombo || (options.auto && !replay.isReplay)) return
         if (time.now < this.customCombo.get(this.customCombo.get(0).start).time) return
         if (this.customCombo.get(this.head).combo == 0) return
         const c = this.customCombo.get(this.head).combo
@@ -51,7 +84,7 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
             const centerY = 0.585
             // 애니메이션 = s * (원래좌표) + (1 - s) * centerX, s * (원래좌표) + (1 - s) * centerY
             const s = 0.6 + 0.4 * Math.unlerpClamped(t, t + 0.112, time.now)
-            const a = ui.configuration.combo.alpha * 0.8 * ((Math.cos(time.now * Math.PI) + 1) / 2)
+            const a = ui.configuration.combo.alpha
             const digitGap = digitWidth * options.comboDistance
             const totalWidth = digitCount * digitWidth + (digitCount - 1) * digitGap
             const startX = centerX - totalWidth / 2
@@ -62,7 +95,7 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
                     t: s * (centerY - h / 2) + (1 - s) * centerY,
                     b: s * (centerY + h / 2) + (1 - s) * centerY,
                 })
-                this.drawDigit(digits[3], digitLayout, this.z, a)
+                drawDigit.drawDigit(this.head, this.customCombo, digits[3], digitLayout, this.z, a)
             } else if (digitCount === 2) {
                 // 첫 번째 자리
                 const digitLayout0 = NormalLayout({
@@ -71,7 +104,7 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
                     t: s * (centerY - h / 2) + (1 - s) * centerY,
                     b: s * (centerY + h / 2) + (1 - s) * centerY,
                 })
-                this.drawDigit(digits[2], digitLayout0, this.z, a)
+                drawDigit.drawDigit(this.head, this.customCombo, digits[2], digitLayout0, this.z, a)
 
                 // 두 번째 자리
                 const digitLayout1 = NormalLayout({
@@ -80,7 +113,7 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
                     t: s * (centerY - h / 2) + (1 - s) * centerY,
                     b: s * (centerY + h / 2) + (1 - s) * centerY,
                 })
-                this.drawDigit(digits[3], digitLayout1, this.z, a)
+                drawDigit.drawDigit(this.head, this.customCombo, digits[3], digitLayout1, this.z, a)
             } else if (digitCount === 3) {
                 // 첫 번째 자리
                 const digitLayout0 = NormalLayout({
@@ -89,7 +122,7 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
                     t: s * (centerY - h / 2) + (1 - s) * centerY,
                     b: s * (centerY + h / 2) + (1 - s) * centerY,
                 })
-                this.drawDigit(digits[1], digitLayout0, this.z, a)
+                drawDigit.drawDigit(this.head, this.customCombo, digits[1], digitLayout0, this.z, a)
 
                 // 두 번째 자리
                 const digitLayout1 = NormalLayout({
@@ -98,7 +131,7 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
                     t: s * (centerY - h / 2) + (1 - s) * centerY,
                     b: s * (centerY + h / 2) + (1 - s) * centerY,
                 })
-                this.drawDigit(digits[2], digitLayout1, this.z, a)
+                drawDigit.drawDigit(this.head, this.customCombo, digits[2], digitLayout1, this.z, a)
 
                 // 세 번째 자리
                 const digitLayout2 = NormalLayout({
@@ -107,7 +140,7 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
                     t: s * (centerY - h / 2) + (1 - s) * centerY,
                     b: s * (centerY + h / 2) + (1 - s) * centerY,
                 })
-                this.drawDigit(digits[3], digitLayout2, this.z, a)
+                drawDigit.drawDigit(this.head, this.customCombo, digits[3], digitLayout2, this.z, a)
             } else if (digitCount === 4) {
                 // 첫 번째 자리
                 const digitLayout0 = NormalLayout({
@@ -116,7 +149,7 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
                     t: s * (centerY - h / 2) + (1 - s) * centerY,
                     b: s * (centerY + h / 2) + (1 - s) * centerY,
                 })
-                this.drawDigit(digits[0], digitLayout0, this.z, a)
+                drawDigit.drawDigit(this.head, this.customCombo, digits[0], digitLayout0, this.z, a)
 
                 // 두 번째 자리
                 const digitLayout1 = NormalLayout({
@@ -125,7 +158,7 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
                     t: s * (centerY - h / 2) + (1 - s) * centerY,
                     b: s * (centerY + h / 2) + (1 - s) * centerY,
                 })
-                this.drawDigit(digits[1], digitLayout1, this.z, a)
+                drawDigit.drawDigit(this.head, this.customCombo, digits[1], digitLayout1, this.z, a)
 
                 // 세 번째 자리
                 const digitLayout2 = NormalLayout({
@@ -134,7 +167,7 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
                     t: s * (centerY - h / 2) + (1 - s) * centerY,
                     b: s * (centerY + h / 2) + (1 - s) * centerY,
                 })
-                this.drawDigit(digits[2], digitLayout2, this.z, a)
+                drawDigit.drawDigit(this.head, this.customCombo, digits[2], digitLayout2, this.z, a)
 
                 // 네 번째 자리
                 const digitLayout3 = NormalLayout({
@@ -143,47 +176,8 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
                     t: s * (centerY - h / 2) + (1 - s) * centerY,
                     b: s * (centerY + h / 2) + (1 - s) * centerY,
                 })
-                this.drawDigit(digits[3], digitLayout3, this.z, a)
+                drawDigit.drawDigit(this.head, this.customCombo, digits[3], digitLayout3, this.z, a)
             }
         }
-    }
-    drawDigit(digit, layout, z, a) {
-        if (!this.customCombo.get(this.head).ap && options.ap) {
-            switch (digit) {
-                case 0:
-                    skin.sprites.glow0.draw(layout, z, a)
-                    break
-                case 1:
-                    skin.sprites.glow1.draw(layout, z, a)
-                    break
-                case 2:
-                    skin.sprites.glow2.draw(layout, z, a)
-                    break
-                case 3:
-                    skin.sprites.glow3.draw(layout, z, a)
-                    break
-                case 4:
-                    skin.sprites.glow4.draw(layout, z, a)
-                    break
-                case 5:
-                    skin.sprites.glow5.draw(layout, z, a)
-                    break
-                case 6:
-                    skin.sprites.glow6.draw(layout, z, a)
-                    break
-                case 7:
-                    skin.sprites.glow7.draw(layout, z, a)
-                    break
-                case 8:
-                    skin.sprites.glow8.draw(layout, z, a)
-                    break
-                case 9:
-                    skin.sprites.glow9.draw(layout, z, a)
-                    break
-            }
-        }
-    }
-    get head() {
-        return archetypes.ComboNumber.searching.get(0).head
     }
 }
