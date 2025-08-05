@@ -80,6 +80,11 @@ export class Stage extends Archetype {
         const h = 1176 / 850
         const layout = new Rect({ l: -w, r: w, t: lane.t, b: lane.t + h })
         skin.sprites.sekaiStage.draw(layout, layer.stage, !options.showLane ? 0 : 1)
+        skin.sprites.sekaiStageCover.draw(
+            layout,
+            layer.stage,
+            !options.showLane ? 0 : options.laneAlpha,
+        )
     }
     drawFallbackStage() {
         skin.sprites.stageLeftBorder.draw(
