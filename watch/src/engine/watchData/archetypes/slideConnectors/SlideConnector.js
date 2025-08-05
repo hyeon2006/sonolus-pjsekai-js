@@ -197,7 +197,7 @@ export class SlideConnector extends Archetype {
         }
     }
     getAlpha(a, b, x) {
-        return Math.remap(a, b, 1, 0, x)
+        return Math.remap(a, b, 1, 0.075, x)
     }
     getScale(scaledTime) {
         return this.ease(Math.unlerpClamped(this.head.scaledTime, this.tail.scaledTime, scaledTime))
