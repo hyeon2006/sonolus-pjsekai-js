@@ -176,7 +176,7 @@ export class SlideConnector extends Archetype {
                     entityInfos.get(this.info.index).archetype !=
                         archetypes.NormalActiveSlideConnector.index)
             )
-                alpha = options.guideAlpha
+                alpha = options.guideAlpha + 0.4
             else alpha = options.connectorAlpha
             const a =
                 this.getAlpha(this.start.scaledTime, this.end.scaledTime, scaledTime.min) * alpha
