@@ -100,17 +100,7 @@ export class SlideConnector extends Archetype {
         for (const touch of touches) {
             if (touch.ended) continue
             if (!hitbox.contains(touch.position)) continue
-            if (
-                (entityInfos.get(this.info.index).archetype !=
-                    archetypes.CriticalSlideConnector.index &&
-                    entityInfos.get(this.info.index).archetype ==
-                        archetypes.CriticalActiveSlideConnector.index) ||
-                (entityInfos.get(this.info.index).archetype !=
-                    archetypes.NormalSlideConnector.index &&
-                    entityInfos.get(this.info.index).archetype ==
-                        archetypes.NormalActiveSlideConnector.index)
-            )
-                disallowEmpty(touch)
+            if (!this.guide) disallowEmpty(touch)
             this.startSharedMemory.lastActiveTime = time.now
         }
         if (this.startSharedMemory.lastActiveTime === time.now) {
@@ -212,7 +202,8 @@ export class SlideConnector extends Archetype {
             if (this.useFallbackSprite) {
                 this.sprites.fallback.draw(layout, this.z, a)
             } else if (
-                (options.connectorAnimation && this.visual === VisualType.Activated) ||
+                options.connectorAnimation &&
+                this.visual === VisualType.Activated &&
                 !this.guide
             ) {
                 const normalA = (Math.cos((time.now - this.start.time) * 2 * Math.PI) + 1) / 2
