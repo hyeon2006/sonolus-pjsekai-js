@@ -80,7 +80,7 @@ export class SlideConnector extends Archetype {
         }
     }
     getAlpha(a, b, x) {
-        return Math.remapClamped(a, b, 1, 0, x)
+        return Math.remapClamped(a, b, 1, 0.075, x)
     }
     get startImport() {
         return archetypes.NormalTapNote.import.get(this.import.startRef)
