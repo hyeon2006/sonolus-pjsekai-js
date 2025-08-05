@@ -41,15 +41,15 @@ export class ComboNumberEffect extends SpawnableArchetype({
         const s =
             0.769 +
             0.231 *
-            Math.unlerpClamped(
-                this.spawnData.time + 0.112,
-                this.spawnData.time + 0.192,
-                time.now,
-            )
+                Math.unlerpClamped(
+                    this.spawnData.time + 0.112,
+                    this.spawnData.time + 0.192,
+                    time.now,
+                )
         const a =
             time.now >= this.spawnData.time + 0.112
                 ? ui.configuration.combo.alpha *
-                Math.unlerp(this.spawnData.time + 0.192, this.spawnData.time + 0.112, time.now)
+                  Math.unlerp(this.spawnData.time + 0.192, this.spawnData.time + 0.112, time.now)
                 : 0
         const digitGap = digitWidth * options.comboDistance
         const totalWidth = digitCount * digitWidth + (digitCount - 1) * digitGap
