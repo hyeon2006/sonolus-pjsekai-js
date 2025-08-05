@@ -150,6 +150,17 @@ export class SlideConnector extends Archetype {
     get useFallbackSprite() {
         return !this.sprites.normal.exists || !this.sprites.active.exists
     }
+    get guide() {
+        return (
+            (entityInfos.get(this.info.index).archetype ==
+                archetypes.CriticalSlideConnector.index &&
+                entityInfos.get(this.info.index).archetype !=
+                    archetypes.CriticalActiveSlideConnector.index) ||
+            (entityInfos.get(this.info.index).archetype == archetypes.NormalSlideConnector.index &&
+                entityInfos.get(this.info.index).archetype !=
+                    archetypes.NormalActiveSlideConnector.index)
+        )
+    }
     updateVisualType() {
         this.visual =
             this.startSharedMemory.lastActiveTime === time.now
@@ -194,23 +205,16 @@ export class SlideConnector extends Archetype {
                 y4: y.min,
             }
             let alpha = 0
-            if (
-                (entityInfos.get(this.info.index).archetype ==
-                    archetypes.CriticalSlideConnector.index &&
-                    entityInfos.get(this.info.index).archetype !=
-                        archetypes.CriticalActiveSlideConnector.index) ||
-                (entityInfos.get(this.info.index).archetype ==
-                    archetypes.NormalSlideConnector.index &&
-                    entityInfos.get(this.info.index).archetype !=
-                        archetypes.NormalActiveSlideConnector.index)
-            )
-                alpha = options.guideAlpha
+            if (this.guide) alpha = options.guideAlpha
             else alpha = options.connectorAlpha
             const a =
                 this.getAlpha(this.start.scaledTime, this.end.scaledTime, scaledTime.min) * alpha
             if (this.useFallbackSprite) {
                 this.sprites.fallback.draw(layout, this.z, a)
-            } else if (options.connectorAnimation && this.visual === VisualType.Activated) {
+            } else if (
+                (options.connectorAnimation && this.visual === VisualType.Activated) ||
+                !this.guide
+            ) {
                 const normalA = (Math.cos((time.now - this.start.time) * 2 * Math.PI) + 1) / 2
                 this.sprites.normal.draw(layout, this.z, a * Math.ease('Out', 'Quad', normalA))
                 this.sprites.active.draw(layout, this.z, a * 0.9 * (1 - normalA))
