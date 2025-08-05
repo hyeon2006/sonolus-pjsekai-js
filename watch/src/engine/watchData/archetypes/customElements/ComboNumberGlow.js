@@ -1,8 +1,7 @@
-import { NormalLayout } from '../../../../../../shared/src/engine/data/utils.js'
 import { options } from '../../../configuration/options.js'
 import { getZ, layer, skin } from '../../skin.js'
 import { archetypes } from '../index.js'
-import { drawDigit } from './drawDigit.js'
+import { comboNumberLayout } from './comboNumberLayout.js'
 export class ComboNumberGlow extends SpawnableArchetype({}) {
     preprocessOrder = 5
     check = this.entityMemory(Boolean)
@@ -56,90 +55,22 @@ export class ComboNumberGlow extends SpawnableArchetype({}) {
             const digitGap = digitWidth * options.comboDistance
             const totalWidth = digitCount * digitWidth + (digitCount - 1) * digitGap
             const startX = centerX - totalWidth / 2
-            if (digitCount === 1) {
-                const digitLayout = NormalLayout({
-                    l: s * (centerX - digitWidth / 2) + (1 - s) * centerX,
-                    r: s * (centerX + digitWidth / 2) + (1 - s) * centerX,
-                    t: s * (centerY - h / 2) + (1 - s) * centerY,
-                    b: s * (centerY + h / 2) + (1 - s) * centerY,
-                })
-                drawDigit.drawDigit(this.head, this.customCombo, digits[3], digitLayout, this.z, a)
-            } else if (digitCount === 2) {
-                // 첫 번째 자리
-                const digitLayout0 = NormalLayout({
-                    l: s * startX + (1 - s) * centerX,
-                    r: s * (startX + digitWidth) + (1 - s) * centerX,
-                    t: s * (centerY - h / 2) + (1 - s) * centerY,
-                    b: s * (centerY + h / 2) + (1 - s) * centerY,
-                })
-                drawDigit.drawAp(this.head, this.customCombo, digits[2], digitLayout0, this.z, a)
-                // 두 번째 자리
-                const digitLayout1 = NormalLayout({
-                    l: s * (startX + digitWidth + digitGap) + (1 - s) * centerX,
-                    r: s * (startX + 2 * digitWidth + digitGap) + (1 - s) * centerX,
-                    t: s * (centerY - h / 2) + (1 - s) * centerY,
-                    b: s * (centerY + h / 2) + (1 - s) * centerY,
-                })
-                drawDigit.drawAp(this.head, this.customCombo, digits[3], digitLayout1, this.z, a)
-            } else if (digitCount === 3) {
-                // 첫 번째 자리
-                const digitLayout0 = NormalLayout({
-                    l: s * startX + (1 - s) * centerX,
-                    r: s * (startX + digitWidth) + (1 - s) * centerX,
-                    t: s * (centerY - h / 2) + (1 - s) * centerY,
-                    b: s * (centerY + h / 2) + (1 - s) * centerY,
-                })
-                drawDigit.drawAp(this.head, this.customCombo, digits[1], digitLayout0, this.z, a)
-                // 두 번째 자리
-                const digitLayout1 = NormalLayout({
-                    l: s * (startX + digitWidth + digitGap) + (1 - s) * centerX,
-                    r: s * (startX + 2 * digitWidth + digitGap) + (1 - s) * centerX,
-                    t: s * (centerY - h / 2) + (1 - s) * centerY,
-                    b: s * (centerY + h / 2) + (1 - s) * centerY,
-                })
-                drawDigit.drawAp(this.head, this.customCombo, digits[2], digitLayout1, this.z, a)
-                // 세 번째 자리
-                const digitLayout2 = NormalLayout({
-                    l: s * (startX + 2 * (digitWidth + digitGap)) + (1 - s) * centerX,
-                    r: s * (startX + 3 * digitWidth + 2 * digitGap) + (1 - s) * centerX,
-                    t: s * (centerY - h / 2) + (1 - s) * centerY,
-                    b: s * (centerY + h / 2) + (1 - s) * centerY,
-                })
-                drawDigit.drawAp(this.head, this.customCombo, digits[3], digitLayout2, this.z, a)
-            } else if (digitCount === 4) {
-                // 첫 번째 자리
-                const digitLayout0 = NormalLayout({
-                    l: s * startX + (1 - s) * centerX,
-                    r: s * (startX + digitWidth) + (1 - s) * centerX,
-                    t: s * (centerY - h / 2) + (1 - s) * centerY,
-                    b: s * (centerY + h / 2) + (1 - s) * centerY,
-                })
-                drawDigit.drawAp(this.head, this.customCombo, digits[0], digitLayout0, this.z, a)
-                // 두 번째 자리
-                const digitLayout1 = NormalLayout({
-                    l: s * (startX + digitWidth + digitGap) + (1 - s) * centerX,
-                    r: s * (startX + 2 * digitWidth + digitGap) + (1 - s) * centerX,
-                    t: s * (centerY - h / 2) + (1 - s) * centerY,
-                    b: s * (centerY + h / 2) + (1 - s) * centerY,
-                })
-                drawDigit.drawAp(this.head, this.customCombo, digits[1], digitLayout1, this.z, a)
-                // 세 번째 자리
-                const digitLayout2 = NormalLayout({
-                    l: s * (startX + 2 * (digitWidth + digitGap)) + (1 - s) * centerX,
-                    r: s * (startX + 3 * digitWidth + 2 * digitGap) + (1 - s) * centerX,
-                    t: s * (centerY - h / 2) + (1 - s) * centerY,
-                    b: s * (centerY + h / 2) + (1 - s) * centerY,
-                })
-                drawDigit.drawAp(this.head, this.customCombo, digits[2], digitLayout2, this.z, a)
-                // 네 번째 자리
-                const digitLayout3 = NormalLayout({
-                    l: s * (startX + 3 * (digitWidth + digitGap)) + (1 - s) * centerX,
-                    r: s * (startX + 4 * digitWidth + 3 * digitGap) + (1 - s) * centerX,
-                    t: s * (centerY - h / 2) + (1 - s) * centerY,
-                    b: s * (centerY + h / 2) + (1 - s) * centerY,
-                })
-                drawDigit.drawAp(this.head, this.customCombo, digits[3], digitLayout3, this.z, a)
-            }
+            comboNumberLayout.numberLayout(
+                this.head,
+                this.customCombo,
+                this.z,
+                digits,
+                digitCount,
+                digitWidth,
+                digitGap,
+                s,
+                a,
+                h,
+                centerX,
+                centerY,
+                startX,
+                true,
+            )
         }
     }
     get head() {
