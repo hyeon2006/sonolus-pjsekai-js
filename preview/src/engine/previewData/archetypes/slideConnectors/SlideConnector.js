@@ -68,9 +68,7 @@ export class SlideConnector extends Archetype {
                     p3: pos.max.translate(Math.lerp(r.min, r.max, s.max), 0),
                     p4: pos.min.translate(Math.lerp(r.min, r.max, s.min), 0),
                 })
-                const a =
-                    this.getAlpha(ft.min, ft.max, st.min) *
-                    (this.guide ? options.guideAlpha : options.connectorAlpha)
+                const a = this.getAlpha(ft.min, ft.max, st.min)
                 if (this.useFallbackSprite) {
                     this.sprites.fallback.draw(layout, z, a)
                 } else {
@@ -80,7 +78,7 @@ export class SlideConnector extends Archetype {
         }
     }
     getAlpha(a, b, x) {
-        return Math.remapClamped(a, b, 1, 0.075, x)
+        return Math.remapClamped(a, b, options.guideAlpha, 0.075, x)
     }
     get startImport() {
         return archetypes.NormalTapNote.import.get(this.import.startRef)

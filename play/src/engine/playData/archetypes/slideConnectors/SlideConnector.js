@@ -194,11 +194,7 @@ export class SlideConnector extends Archetype {
                 y3: y.max,
                 y4: y.min,
             }
-            let alpha = 0
-            if (this.guide) alpha = options.guideAlpha
-            else alpha = options.connectorAlpha
-            const a =
-                this.getAlpha(this.start.scaledTime, this.end.scaledTime, scaledTime.min) * alpha
+            const a = this.getAlpha(this.start.scaledTime, this.end.scaledTime, scaledTime.min)
             if (this.useFallbackSprite) {
                 this.sprites.fallback.draw(layout, this.z, a)
             } else if (
@@ -215,7 +211,7 @@ export class SlideConnector extends Archetype {
         }
     }
     getAlpha(a, b, x) {
-        return Math.remap(a, b, 1, 0, x)
+        return Math.remap(a, b, options.guideAlpha, 0.075, x)
     }
     getScale(scaledTime) {
         return this.ease(Math.unlerpClamped(this.head.scaledTime, this.tail.scaledTime, scaledTime))
