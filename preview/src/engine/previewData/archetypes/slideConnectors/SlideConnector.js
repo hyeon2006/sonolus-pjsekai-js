@@ -68,7 +68,9 @@ export class SlideConnector extends Archetype {
                     p3: pos.max.translate(Math.lerp(r.min, r.max, s.max), 0),
                     p4: pos.min.translate(Math.lerp(r.min, r.max, s.min), 0),
                 })
-                const a = this.getAlpha(ft.min, ft.max, st.min) * options.connectorAlpha
+                const a =
+                    this.getAlpha(ft.min, ft.max, st.min) *
+                    (this.guide ? options.guideAlpha : options.connectorAlpha)
                 if (this.useFallbackSprite) {
                     this.sprites.fallback.draw(layout, z, a)
                 } else {
@@ -78,7 +80,7 @@ export class SlideConnector extends Archetype {
         }
     }
     getAlpha(a, b, x) {
-        return Math.remapClamped(a, b, 0.575, 0.075, x)
+        return Math.remapClamped(a, b, 1, 0, x)
     }
     get startImport() {
         return archetypes.NormalTapNote.import.get(this.import.startRef)
@@ -94,5 +96,16 @@ export class SlideConnector extends Archetype {
     }
     get useFallbackSprite() {
         return !this.sprites.normal.exists
+    }
+    get guide() {
+        return (
+            (entityInfos.get(this.info.index).archetype ==
+                archetypes.CriticalSlideConnector.index &&
+                entityInfos.get(this.info.index).archetype !=
+                    archetypes.CriticalActiveSlideConnector.index) ||
+            (entityInfos.get(this.info.index).archetype == archetypes.NormalSlideConnector.index &&
+                entityInfos.get(this.info.index).archetype !=
+                    archetypes.NormalActiveSlideConnector.index)
+        )
     }
 }
