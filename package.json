@@ -1,6 +1,6 @@
 {
     "name": "sonolus-pjsekai-js",
-    "version": "1.4.7",
+    "version": "1.4.8",
     "description": "A recreation of Project Sekai: Colorful Stage! engine in Sonolus",
     "type": "module",
     "files": [

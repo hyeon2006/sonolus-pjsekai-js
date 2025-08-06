@@ -115,7 +115,7 @@ export class ActiveSlideConnector extends SlideConnector {
         this.diamondZ = getZ(layer.note.tick, this.head.time, this.headImport.lane)
     }
     getAlpha() {
-        return this.visual === (VisualType.NotActivated ? 0.5 : 1) * options.connectorAlpha
+        return this.visual === options.connectorAlpha * VisualType.NotActivated ? 0.5 : 1
     }
     renderGlow() {
         if (time.now < this.start.time) return
