@@ -200,7 +200,7 @@ export class ActiveSlideConnector extends SlideConnector {
         })
     }
     getAlpha() {
-        return this.visual === (VisualType.NotActivated ? 0.5 : 1) * options.connectorAlpha
+        return this.visual === options.connectorAlpha * VisualType.NotActivated ? 0.5 : 1
     }
     renderGlow() {
         if (!options.slotEffectEnabled) return
