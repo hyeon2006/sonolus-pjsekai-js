@@ -46,15 +46,16 @@ export class Stage extends Archetype {
     }
     drawAutoLive() {
         const a = 0.8 * ((Math.cos(time.now * Math.PI) + 1) / 2)
-        const h = 0.04 * ui.configuration.judgment.scale
+        const h = 0.04
         const w = h * 32.55
-        const x = scaledScreen.r - 2.6452178
+        const x = (6.272801 * screen.aspectRatio) / 2.045
+        const y = 1.159181
         skin.sprites.autoLive.draw(
             NormalLayout({
                 l: x - w,
                 r: x + w,
-                t: scaledScreen.b - scaledScreen.t - scaledScreen.wToH / 4 - h,
-                b: scaledScreen.b - scaledScreen.t - scaledScreen.wToH / 4 + h,
+                t: y - h,
+                b: y + h,
             }),
             layer.judgment,
             a,
