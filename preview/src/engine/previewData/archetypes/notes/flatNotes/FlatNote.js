@@ -7,7 +7,7 @@ export class FlatNote extends Note {
     render() {
         const time = bpmChanges.at(this.import.beat).time
         const pos = panel.getPos(time)
-        const z = getZ(this.layer, time, this.import.lane)
+        const z = getZ(this.layer, -time, -Math.abs(this.import.lane))
         const l = this.import.lane - this.import.size
         const r = this.import.lane + this.import.size
         const b = -note.h

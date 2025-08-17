@@ -17,7 +17,7 @@ export class SlotEffect extends SpawnableArchetype({
             b: 1 + note.h,
             t: 1 - note.h,
         }).copyTo(this.layout)
-        this.z = getZ(layer.slotEffect, -this.spawnData.startTime, Math.abs(this.spawnData.lane))
+        this.z = getZ(layer.slotEffect, -this.spawnData.startTime, -Math.abs(this.spawnData.lane))
     }
     updateParallel() {
         if (time.now >= this.endTime) {

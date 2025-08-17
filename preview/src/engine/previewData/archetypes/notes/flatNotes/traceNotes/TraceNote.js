@@ -6,7 +6,7 @@ export class TraceNote extends FlatNote {
     layer = layer.note.trace
     render() {
         const { time, pos } = super.render()
-        const z = getZ(layer.note.tick, time, this.import.lane)
+        const z = getZ(layer.note.tick, -time, -Math.abs(this.import.lane))
         const b = -note.h
         const t = note.h
         if (!this.useFallbackSprites) {

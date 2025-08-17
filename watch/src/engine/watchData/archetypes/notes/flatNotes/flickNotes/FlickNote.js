@@ -53,7 +53,7 @@ export class FlickNote extends FlatNote {
         }
         if (options.markerAnimation)
             new Vec(this.flickImport.direction, -2 * scaledScreen.wToH).copyTo(this.arrow.animation)
-        this.arrow.z = getZ(layer.note.arrow, this.targetTime, this.import.lane)
+        this.arrow.z = getZ(layer.note.arrow, -this.targetTime, -Math.abs(this.import.lane))
     }
     get hitTime() {
         return (

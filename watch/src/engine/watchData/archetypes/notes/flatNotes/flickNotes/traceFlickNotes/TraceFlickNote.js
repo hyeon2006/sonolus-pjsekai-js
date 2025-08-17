@@ -23,7 +23,7 @@ export class TraceFlickNote extends FlickNote {
                 b: 1 + note.h,
                 t: 1 - note.h,
             }).copyTo(this.diamondLayout)
-            this.diamondZ = getZ(layer.note.tick, this.targetTime, this.import.lane)
+            this.diamondZ = getZ(layer.note.tick, -this.targetTime, -Math.abs(this.import.lane))
         }
     }
     render() {

@@ -7,7 +7,7 @@ export class VisibleSlideTickNote extends SlideTickNote {
     render() {
         const time = bpmChanges.at(this.import.beat).time
         const pos = panel.getPos(time)
-        const z = getZ(layer.note.tick, time, this.import.lane)
+        const z = getZ(layer.note.tick, -time, -Math.abs(this.import.lane))
         const b = -note.h
         const t = note.h
         if (this.useFallbackSprite) {
