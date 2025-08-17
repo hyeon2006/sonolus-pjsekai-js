@@ -2,7 +2,7 @@ import { windows } from '../../../../../../../../shared/src/engine/data/windows.
 import { claimStart, disallowEmpty, disallowEnd, getClaimedStart } from '../../../InputManager.js'
 import { FlatNote } from '../FlatNote.js'
 export class TapNote extends FlatNote {
-    leniency = 0.75
+    leniency = 1
     updateSequential() {
         if (time.now < this.inputTime.min) return
         claimStart(this.info.index, this.targetTime, this.hitbox, this.fullHitbox)
