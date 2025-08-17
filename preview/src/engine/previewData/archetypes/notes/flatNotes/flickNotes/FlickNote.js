@@ -13,7 +13,7 @@ export class FlickNote extends FlatNote {
     }
     render() {
         const { time, pos } = super.render()
-        const z = getZ(layer.note.arrow, time, this.import.lane)
+        const z = getZ(layer.note.arrow, -time, -Math.abs(this.import.lane))
         const arrowSpriteId = getArrowSpriteId(
             this.arrowSprites,
             this.import.size,

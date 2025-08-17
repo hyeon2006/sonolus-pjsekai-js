@@ -55,7 +55,7 @@ export class FlatNote extends Note {
             perspectiveLayout({ l: ml, r: mr, b, t }).copyTo(this.spriteLayouts.middle)
             perspectiveLayout({ l: mr, r, b, t }).copyTo(this.spriteLayouts.right)
         }
-        this.z = getZ(this.layer, this.targetTime, this.import.lane)
+        this.z = getZ(this.layer, -this.targetTime, -Math.abs(this.import.lane))
         this.result.accuracy = this.windows.good.max
     }
     updateParallel() {

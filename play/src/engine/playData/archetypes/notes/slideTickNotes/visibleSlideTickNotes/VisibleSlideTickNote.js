@@ -45,7 +45,7 @@ export class VisibleSlideTickNote extends SlideTickNote {
                 .toQuad()
                 .copyTo(this.spriteLayout)
         }
-        this.z = getZ(layer.note.tick, this.targetTime, this.import.lane)
+        this.z = getZ(layer.note.tick, -this.targetTime, -Math.abs(this.import.lane))
     }
     updateParallel() {
         super.updateParallel()

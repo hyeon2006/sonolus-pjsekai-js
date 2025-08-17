@@ -24,7 +24,7 @@ export class SlotGlowEffect extends SpawnableArchetype({
         this.z = getZ(
             layer.slotGlowEffect,
             -this.spawnData.startTime,
-            Math.abs(this.spawnData.lane),
+            -Math.abs(this.spawnData.lane),
         )
     }
     updateParallel() {

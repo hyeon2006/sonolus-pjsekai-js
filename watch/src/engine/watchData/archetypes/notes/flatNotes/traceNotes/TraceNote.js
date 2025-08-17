@@ -25,7 +25,7 @@ export class TraceNote extends FlatNote {
                 b: 1 + note.h,
                 t: 1 - note.h,
             }).copyTo(this.diamondLayout)
-            this.diamondZ = getZ(layer.note.tick, this.targetTime, this.import.lane)
+            this.diamondZ = getZ(layer.note.tick, -this.targetTime, -Math.abs(this.import.lane))
         }
     }
     render() {

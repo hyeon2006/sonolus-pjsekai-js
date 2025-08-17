@@ -40,7 +40,7 @@ export class SlideConnector extends Archetype {
                     archetypes.IgnoredSlideTickNote.index
                 ? layer.note.connectorS
                 : layer.note.connector,
-            bpmChanges.at(this.startImport.beat).time,
+            -bpmChanges.at(this.startImport.beat).time,
             -Math.abs(this.startImport.lane),
         )
         for (let i = index.min; i <= index.max; i++) {
