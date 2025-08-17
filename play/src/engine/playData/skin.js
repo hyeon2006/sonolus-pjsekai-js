@@ -160,7 +160,6 @@ export const layer = {
         body: 100,
         trace: 99,
         slide: 98,
-        connectorS: 96,
         connector: 94,
     },
     simLine: 90,
