@@ -11,7 +11,6 @@ export class TraceFlickNote extends FlickNote {
     earlyHitIsCorrectDirection = this.entityMemory(Boolean)
     diamondLayout = this.entityMemory(Rect)
     diamondZ = this.entityMemory(Number)
-    layer = layer.note.trace
     initialize() {
         super.initialize()
         this.earlyInputTime = this.targetTime + input.offset
