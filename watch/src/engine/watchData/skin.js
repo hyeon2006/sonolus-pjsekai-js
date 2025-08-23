@@ -161,6 +161,7 @@ export const layer = {
         trace: 99,
         slide: 98,
         connector: 94,
+        guide: 92,
     },
     simLine: 90,
     slotEffect: 50,

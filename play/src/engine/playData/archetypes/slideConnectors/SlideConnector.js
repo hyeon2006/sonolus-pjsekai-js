@@ -79,7 +79,7 @@ export class SlideConnector extends Archetype {
         if (options.hidden > 0)
             this.hiddenTime = this.tail.scaledTime - note.duration * options.hidden
         this.z = getZ(
-            layer.note.connector,
+            !this.guide ? layer.note.connector : layer.note.guide,
             -this.start.time,
             -Math.abs(this.startImport.lane) + this.critical,
         )

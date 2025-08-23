@@ -34,7 +34,7 @@ export class SlideConnector extends Archetype {
             max: this.tailImport.lane + this.tailImport.size,
         }
         const z = getZ(
-            layer.note.connector,
+            !this.guide ? layer.note.connector : layer.note.guide,
             -bpmChanges.at(this.startImport.beat).time,
             -Math.abs(this.startImport.lane) + this.critical,
         )
