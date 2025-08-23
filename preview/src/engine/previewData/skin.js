@@ -90,6 +90,7 @@ export const layer = {
         body: 100,
         trace: 99,
         connector: 94,
+        guide: 92,
     },
     simLine: 90,
     line: 10,
