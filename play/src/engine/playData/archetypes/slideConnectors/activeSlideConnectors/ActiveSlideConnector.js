@@ -21,10 +21,18 @@ export class ActiveSlideConnector extends SlideConnector {
         this.glowZ = getZ(
             layer.connectorSlotGlowEffect,
             -this.start.time,
-            -Math.abs(this.startImport.lane),
+            -Math.abs(this.startImport.lane) + this.critical,
         )
-        this.slideZ = getZ(layer.note.slide, -this.start.time, -Math.abs(this.startImport.lane))
-        this.diamondZ = getZ(layer.note.tick, -this.start.time, -Math.abs(this.startImport.lane))
+        this.slideZ = getZ(
+            layer.note.slide,
+            -this.start.time,
+            -Math.abs(this.startImport.lane) + this.critical,
+        )
+        this.diamondZ = getZ(
+            layer.note.tick,
+            -this.start.time,
+            -Math.abs(this.startImport.lane) + this.critical,
+        )
     }
     updateParallel() {
         if (time.now >= this.tail.time) {

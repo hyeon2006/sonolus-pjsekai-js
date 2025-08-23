@@ -5,4 +5,7 @@ export class CriticalActiveSlideConnector extends ActiveSlideConnector {
         normal: skin.sprites.criticalActiveSlideConnectorNormal,
         fallback: skin.sprites.criticalActiveSlideConnectorFallback,
     }
+    get critical() {
+        return 0.4
+    }
 }

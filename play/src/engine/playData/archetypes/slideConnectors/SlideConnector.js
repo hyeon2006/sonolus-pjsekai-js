@@ -78,7 +78,11 @@ export class SlideConnector extends Archetype {
         this.tail.r = this.tail.lane + this.tailImport.size
         if (options.hidden > 0)
             this.hiddenTime = this.tail.scaledTime - note.duration * options.hidden
-        this.z = getZ(layer.note.connector, -this.start.time, -Math.abs(this.startImport.lane))
+        this.z = getZ(
+            layer.note.connector,
+            -this.start.time,
+            -Math.abs(this.startImport.lane) + this.critical,
+        )
     }
     updateSequentialOrder = 1
     updateSequential() {
