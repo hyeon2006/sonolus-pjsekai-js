@@ -5,6 +5,7 @@ import { FlickNote } from '../FlickNote.js'
 export class TraceFlickNote extends FlickNote {
     diamondLayout = this.entityMemory(Rect)
     diamondZ = this.entityMemory(Number)
+    layer = layer.note.trace
     get useFallbackSprites() {
         return (
             !this.sprites.left.exists ||
