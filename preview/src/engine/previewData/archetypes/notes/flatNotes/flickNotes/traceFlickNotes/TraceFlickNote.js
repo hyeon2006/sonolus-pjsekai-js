@@ -3,6 +3,7 @@ import { scaledScreen } from '../../../../../scaledScreen.js'
 import { getZ, layer } from '../../../../../skin.js'
 import { FlickNote } from '../FlickNote.js'
 export class TraceFlickNote extends FlickNote {
+    layer = layer.note.trace
     render() {
         const { time, pos } = super.render()
         const z = getZ(layer.note.tick, -time, -Math.abs(this.import.lane))
