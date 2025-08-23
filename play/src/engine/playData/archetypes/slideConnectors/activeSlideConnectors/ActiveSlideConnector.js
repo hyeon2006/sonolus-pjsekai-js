@@ -21,10 +21,18 @@ export class ActiveSlideConnector extends SlideConnector {
         this.glowZ = getZ(
             layer.connectorSlotGlowEffect,
             -this.start.time,
-            -Math.abs(this.startImport.lane),
+            -Math.abs(this.startImport.lane) + this.critical,
         )
-        this.slideZ = getZ(layer.note.slide, -this.start.time, -Math.abs(this.startImport.lane))
-        this.diamondZ = getZ(layer.note.tick, -this.start.time, -Math.abs(this.startImport.lane))
+        this.slideZ = getZ(
+            layer.note.slide,
+            -this.start.time,
+            -Math.abs(this.startImport.lane) + this.critical,
+        )
+        this.diamondZ = getZ(
+            layer.note.tick,
+            -this.start.time,
+            -Math.abs(this.startImport.lane) + this.critical,
+        )
     }
     updateParallel() {
         if (time.now >= this.tail.time) {
@@ -214,10 +222,13 @@ export class ActiveSlideConnector extends SlideConnector {
         const s = this.getScale(time.scaled)
         const l = this.getL(s)
         const r = this.getR(s)
-        const dynamicHeight = 3 + (Math.cos((time.now - this.start.time) * 8 * Math.PI) + 1) / 2
+        const dynamicHeight =
+            options.version == 0
+                ? 3 + (Math.cos((time.now - this.start.time) * 8 * Math.PI) + 1) / 2
+                : 4 * ((Math.sin((time.now - this.start.time) * 2.5 * Math.PI) + 1) / 2)
         const h = dynamicHeight * options.slotEffectSize * scaledScreen.wToH
         const shear = 1 + 0.25 * (dynamicHeight / 4) * options.slotEffectSize
-        const w = 0.15
+        const w = options.version == 0 ? 0.035 * Math.abs(l - r) + 0.08 : 0
         const quadLike = {
             x1: l - w,
             x2: l * shear - w,
@@ -232,13 +243,21 @@ export class ActiveSlideConnector extends SlideConnector {
             this.slideGlowSprite.fallback.draw(
                 quadLike,
                 this.glowZ,
-                Math.min(1, (time.now - this.start.time) * 4) * (options.lightweight ? 0.15 : 0.3),
+                options.version == 0
+                    ? Math.min(1, (time.now - this.start.time) * 4) *
+                          (options.lightweight ? 0.15 : 0.3)
+                    : Math.sin((time.now - this.start.time) * 2.5 * Math.PI) *
+                          (options.lightweight ? 0.15 : 0.3),
             )
         else
             this.slideGlowSprite.glow.draw(
                 quadLike,
                 this.glowZ,
-                Math.min(1, (time.now - this.start.time) * 4) * (options.lightweight ? 0.15 : 0.3),
+                options.version == 0
+                    ? Math.min(1, (time.now - this.start.time) * 4) *
+                          (options.lightweight ? 0.15 : 0.3)
+                    : Math.sin((time.now - this.start.time) * 2.5 * Math.PI) *
+                          (options.lightweight ? 0.15 : 0.3),
             )
     }
     renderSlide() {

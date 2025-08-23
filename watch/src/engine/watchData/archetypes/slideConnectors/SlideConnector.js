@@ -112,15 +112,11 @@ export class SlideConnector extends Archetype {
         this.tail.r = this.tail.lane + this.tailImport.size
         if (options.hidden > 0)
             this.hiddenTime = this.tail.scaledTime - note.duration * options.hidden
-        if (
-            entityInfos.get(this.import.startRef).archetype ===
-                archetypes.IgnoredSlideTickNote.index ||
-            entityInfos.get(this.import.endRef).archetype === archetypes.IgnoredSlideTickNote.index
-        ) {
-            this.z = getZ(layer.note.connectorS, -this.start.time, -Math.abs(this.startImport.lane))
-        } else {
-            this.z = getZ(layer.note.connector, -this.start.time, -Math.abs(this.startImport.lane))
-        }
+        this.z = getZ(
+            layer.note.connector,
+            -this.start.time,
+            -Math.abs(this.startImport.lane) + this.critical,
+        )
     }
     updateVisualType() {
         if (!replay.isReplay) {

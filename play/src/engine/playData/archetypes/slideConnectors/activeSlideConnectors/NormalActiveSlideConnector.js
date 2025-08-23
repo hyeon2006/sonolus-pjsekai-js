@@ -36,4 +36,7 @@ export class NormalActiveSlideConnector extends ActiveSlideConnector {
     get slideStartNote() {
         return archetypes.NormalSlideStartNote
     }
+    get critical() {
+        return 0
+    }
 }

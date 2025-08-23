@@ -36,4 +36,7 @@ export class CriticalActiveSlideConnector extends ActiveSlideConnector {
     get slideStartNote() {
         return archetypes.CriticalSlideStartNote
     }
+    get critical() {
+        return 0.4
+    }
 }

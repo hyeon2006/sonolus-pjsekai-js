@@ -34,14 +34,9 @@ export class SlideConnector extends Archetype {
             max: this.tailImport.lane + this.tailImport.size,
         }
         const z = getZ(
-            entityInfos.get(this.import.startRef).archetype ===
-                archetypes.IgnoredSlideTickNote.index ||
-                entityInfos.get(this.import.endRef).archetype ===
-                    archetypes.IgnoredSlideTickNote.index
-                ? layer.note.connectorS
-                : layer.note.connector,
+            layer.note.connector,
             -bpmChanges.at(this.startImport.beat).time,
-            -Math.abs(this.startImport.lane),
+            -Math.abs(this.startImport.lane) + this.critical,
         )
         for (let i = index.min; i <= index.max; i++) {
             const x = i * panel.w
