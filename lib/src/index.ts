@@ -5,7 +5,7 @@ export { uscToLevelData } from "./usc/convert.js";
 export * from "./usc/index.js";
 export { uscToUSC } from "./usc/revert.js";
 
-export const version = "1.4.14";
+export const version = "1.4.15";
 
 export const databaseEngineItem = {
     name: "prosekaR",

@@ -207,7 +207,13 @@ export class SlideConnector extends Archetype {
         }
     }
     getAlpha(a, b, x) {
-        return Math.remap(a, b, options.guideAlpha, options.guideAlpha * 0.1, x)
+        return Math.remap(
+            a,
+            b,
+            options.guideAlpha,
+            options.guideAlpha * this.getMinAlpha(this.critical),
+            x,
+        )
     }
     getScale(scaledTime) {
         return this.ease(Math.unlerpClamped(this.head.scaledTime, this.tail.scaledTime, scaledTime))
@@ -223,5 +229,9 @@ export class SlideConnector extends Archetype {
     }
     getR(scale) {
         return Math.lerp(this.head.r, this.tail.r, scale)
+    }
+    getMinAlpha(critical) {
+        if (critical > 0) return 0.2
+        else return 0.15
     }
 }
